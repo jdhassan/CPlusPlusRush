@@ -246,6 +246,9 @@ void addNewComment() {
     }
 }
 
+/*
+Exit program
+*/
 void quit()
 {
     addSpace();
@@ -254,7 +257,9 @@ void quit()
     exit(1);
 }
 
-        
+/*
+See if name belongs to an applicant in applicants.txt file
+*/        
 bool isMember(string name) {
     ifstream member("members.txt", ios::in);
     
@@ -262,6 +267,7 @@ bool isMember(string name) {
     int year;
     int clearance;
     
+    //go through file and check for matching name, indicate if true
     while (member >> n >> year >> clearance) {
         if (n == name) {
             return true;
@@ -270,6 +276,9 @@ bool isMember(string name) {
     return false;
 }
 
+/*
+See if name belongs to an applicant in applicants.txt file
+*/
 bool isApplicant(string name) {
     ifstream applicant("applicants.txt", ios::in);
     
@@ -277,6 +286,7 @@ bool isApplicant(string name) {
     int year;
     int status;
     
+    //go through file and check for matching name, indicate if true
     while (applicant >> n >> year >> status) {
         if (n == name) {
             return true;
