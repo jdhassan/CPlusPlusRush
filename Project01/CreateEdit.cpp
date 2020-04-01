@@ -11,8 +11,14 @@
 #include <iostream>
 #include <cstdio>
 #include <fstream>
+#include <regex>
+
+using namespace std;
 
 void CreateEdit::createNew(string fileName, string type) {
+    bool validNameString = true;
+    bool validYearInt = true;
+    bool validStatClearInt = true;
     string name, sc;
     int year, statClear;
     if (type == "Member") {
@@ -24,14 +30,32 @@ void CreateEdit::createNew(string fileName, string type) {
     
     ofstream file(fileName, ios::app);
     
+    while(validNameString) {
     cout << "Enter the new " << type << "'s Name" << endl;
     cin >> name;
+        validNameString = !validName(name);
+        if (validNameString) {
+            cout << "Invalid input, try again" << endl;
+        }
+    }
     
+    while(validYearInt) {
     cout << "Enter the " << type << "'s Year." << endl;
     cin >> year;
+        validYearInt = !validYear(year);
+        if (validYearInt) {
+            cout << "Invalid input, try again" << endl;
+        }
+    }
     
+    while(validStatClearInt) {
     cout << "Enter the " << type << "'s "<< sc <<"." << endl;
     cin >> statClear;
+        validStatClearInt = !validStatus(statClear);
+        if (validStatClearInt) {
+            cout << "Invalid input, try again" << endl;
+        }
+    }
     sc = ", " + sc + ": ";
     
     file << name << ' ' << year << ' ' << statClear << endl;
@@ -39,6 +63,9 @@ void CreateEdit::createNew(string fileName, string type) {
 }
 
 void CreateEdit::edit(string fileName, string type) {
+    bool isNameValid = true;
+    bool isyearValid = true;
+    bool isStatClearValid = true;
     string name, fname, gname, newFileName, sc;
     newFileName = "new"+fileName;
     int year, fyear;
@@ -58,18 +85,38 @@ void CreateEdit::edit(string fileName, string type) {
     while (file >> name >> year >> statClear) {
         if (name == gname) {
             found = true;
+            while(isNameValid) {
             cout << "Enter " << type << "'s new name (type \".\" to keep old)" << endl;
             cin >> fname;
+                isNameValid = !validName(fname);
+                if (isNameValid) {
+                    cout << "Invalid input, try again" << endl;
+                }
+            }
             if (fname != ".") {
                 name = fname;
             }
+            
+            while(isyearValid) {
             cout << "Enter " << type << "'s new year (type 0 to keep last)" << endl;
             cin >> fyear;
+                isyearValid = !validYear(fyear);
+                if (isyearValid) {
+                    cout << "Invalid input, try again" << endl;
+                }
+            }
             if (fyear != 0) {
                 year = fyear;
             }
+            
+            while(isStatClearValid) {
             cout << "Enter " << type << "'s new" << sc << "(type 0 to keep last)" << endl;
             cin >> fStatClear;
+                isStatClearValid = !validStatus(fStatClear);
+                if (isStatClearValid) {
+                    cout << "Invalid input, try again" << endl;
+                }
+            }
             if (fStatClear != 0) {
                 statClear = fStatClear;
             }
@@ -139,4 +186,16 @@ void CreateEdit::deleteFile() {
         }
         
     }
+}
+
+bool CreateEdit::validName(string s) {
+    return (regex_match(s, regex("^[A-Za-z]+$")) && (s != ""));
+}
+
+bool CreateEdit::validYear(int y) {
+    return (y >= 0 && y <= 5);
+}
+
+bool CreateEdit::validStatus(int s) {
+    return (s >= 0 && s <= 4);
 }
