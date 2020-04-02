@@ -12,6 +12,7 @@
 #include <cstdio>
 #include "Search.hpp"
 #include "CreateEdit.hpp"
+#include "Comments.hpp"
 
 
 using namespace std;
@@ -48,9 +49,11 @@ int main()
     cout << "1.Applicant Options" << endl;
     cout << "2.Member Options" << endl;
     cout << "3.Delete File(s)" << endl;
-    cout << "4.Exit Program" << endl;
+    cout << "4.Comment Options" << endl;
+    cout << "5.Exit Program" << endl;
     cin >> choice;
     
+    addSpace();
     switch (choice){
         case 1:
             applicantOptionDirectory();
@@ -63,6 +66,8 @@ int main()
             main();
             break;
         case 4:
+            commentDirectory();
+        case 5:
             quit();
             break;
         default:
@@ -189,23 +194,27 @@ void searchDirectory(int option)
 
 void commentDirectory() {
     int choice;
+    Comments * c = new Comments();
     cout << "1.Add New Comment" << endl;
-    cout << "2.Search by Commentor" << endl;
-    cout << "3.Search by Applicant" << endl;
+    cout << "2.Search Comments" << endl;
     cout << "4.Back" << endl;
     cin >> choice;
     
     switch (choice) {
         case 1:
+            c->makeComment();
             break;
         case 2:
+            c->getComment();
             break;
         case 3:
             break;
-        case 4:
+        default:
+            cout << "Invalid input" << endl;
+            commentDirectory();
             break;
-            
     }
+    main();
 }
 
 
@@ -246,9 +255,6 @@ void addNewComment() {
     }
 }
 
-/*
-Exit program
-*/
 void quit()
 {
     addSpace();
@@ -257,9 +263,7 @@ void quit()
     exit(1);
 }
 
-/*
-See if name belongs to an applicant in applicants.txt file
-*/        
+        
 bool isMember(string name) {
     ifstream member("members.txt", ios::in);
     
@@ -267,7 +271,6 @@ bool isMember(string name) {
     int year;
     int clearance;
     
-    //go through file and check for matching name, indicate if true
     while (member >> n >> year >> clearance) {
         if (n == name) {
             return true;
@@ -276,9 +279,6 @@ bool isMember(string name) {
     return false;
 }
 
-/*
-See if name belongs to an applicant in applicants.txt file
-*/
 bool isApplicant(string name) {
     ifstream applicant("applicants.txt", ios::in);
     
@@ -286,7 +286,6 @@ bool isApplicant(string name) {
     int year;
     int status;
     
-    //go through file and check for matching name, indicate if true
     while (applicant >> n >> year >> status) {
         if (n == name) {
             return true;
