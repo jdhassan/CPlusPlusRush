@@ -11,9 +11,15 @@
 #include <cstdio>
 #include <fstream>
 #include <regex>
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
 
 void Comments::makeComment() {
     string Cname, name, comment, isPositive, output;
+    output = "";
     bool isPos;
     bool isNameValid = true;
     bool isAppNameValid = true;
@@ -54,29 +60,33 @@ void Comments::makeComment() {
         }
     }
     
-    cout << "Enter your comment" << endl;
-    cin >> comment;
-    
-   
-    comments << Cname << ' ' << name << ' ' << to_string(isPos) << ' '<< comment << endl;
+    cout << "Enter your comment: ";
+    cin.ignore();
+    getline(cin, comment);
+    replace(comment.begin(), comment.end(), ' ', '*');
+    cout << endl;
+    output = Cname + "|" + name + "|" + to_string(isPos) + "|" + comment;
+    comments << output << endl;
     comments.close();
 }
 
 string Comments::getComment() {
-    string fname, name, cname, output, c;
-    bool isPos;
+    string fname, name, cname, o, c, token, output, posi;
+    size_t pos = 0;
+    string outputs[4];
     bool byApp = true;
     bool sort = false;
     bool byPos = false;
     int choice;
+    string delim = "|";
     cout << "Would you like to use parameter?" << endl;
-    cout << "1.By Applicants name" << endl;
+    cout << "1.By Applicant name" << endl;
     cout << "2.By Applicant name and positive only" << endl;
     cout << "3.By Applicant name and negative only" << endl;
     cout << "4.By Commentor name" << endl;
     cout << "5.By Commentor name and positive only" << endl;
     cout << "6.By Commentor name and negative only" << endl;
-    cout << "7.No Parameters" << endl;
+    cout << "7.All comments" << endl;
     cin >> choice;
     
     switch (choice) {
@@ -120,6 +130,7 @@ string Comments::getComment() {
         case 7:
             sort = false;
             name = "empty";
+            break;
         default:
             cout << "Invalid choice" << endl;
             getComment();
@@ -128,45 +139,95 @@ string Comments::getComment() {
     ifstream comments("comments.txt");
     
     if (name == "empty") {
-     while(comments >> cname >> name >> isPos >> c) {
-         output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+     while(comments >> o) {
+         int i = 0;
+         while ((pos = o.find(delim)) != string::npos) {
+             token = o.substr(0, pos);
+             outputs[i] = token;
+             i++;
+             o.erase(0, pos + delim.length());
+         }
+         replace(o.begin(), o.end(), '*', ' ');
+         if (outputs[2] == "1") { posi = "true"; } else {posi = "false";}
+         output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
      }
     }
     else {
-    while(comments >> cname >> name >> isPos >> c) {
+    while(comments >> o) {
+          int i = 0;
+                while ((pos = o.find(delim)) != string::npos) {
+                    token = o.substr(0, pos);
+                    outputs[i] = token;
+                    i++;
+                    o.erase(0, pos + delim.length());
+                }
+                replace(o.begin(), o.end(), '*', ' ');
+                if (outputs[2] == "1") { posi = "true"; } else {posi = "false";}
         if (byApp && !sort) {
-            if (cname == fname) {
-                output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+            if (outputs[1] == fname) {
+               output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
             }
         }
         if (byApp && sort && byPos) {
-                if (cname == fname && isPos == true) {
-                    output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+            if (outputs[1] == fname && posi == "true") {
+                    output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
                 }
         }
         if (byApp && sort && !byPos) {
-                if (cname == fname && isPos == false) {
-                    output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+                if (outputs[1] == fname && posi == "false") {
+                    output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
                 }
         }
         if (!byApp && !sort) {
-            if (cname == fname) {
-                output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+            if (outputs[0] == fname) {
+                output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
             }
         }
         if (!byApp && sort && byPos) {
-                if (cname == fname && isPos == true) {
-                    output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+                if (outputs[0] == fname && posi == "true") {
+                    output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
                 }
         }
         if (!byApp && sort && !byPos) {
-                if (cname == fname && isPos == false) {
-                    output.append("Commentor: " + cname + ", Application: " + name + ", Is Comment Positive: " + to_string(isPos) + ".\nComment: " + c);
+                if (outputs[0] == fname && posi == "false") {
+                    output.append("Commentor: " + outputs[0] + ", Applicant: " + outputs[1] + ", Is Comment Positive: " + posi + ",\nComment: " + o + "\n");
                 }
         }
     }
     }
     return output;
+}
+
+string Comments::getNumberTypes() {
+    string fname, token, o;
+    string outputs[4];
+    int posCount = 0;
+    int negCount = 0;
+    string delim = "|";
+    cout << "Input name of applicant" << endl;
+    cin >> fname;
+    ifstream comment("comments.txt");
+    while(comment >> o) {
+        int i = 0;
+        size_t pos = 0;
+        while ((pos = o.find(delim)) != string::npos) {
+                token = o.substr(0, pos);
+                outputs[i] = token;
+                i++;
+                o.erase(0, pos + delim.length());
+            }
+        if (fname == outputs[1]) {
+            if (outputs[2] == "1") {
+                posCount++;
+            }
+            else {
+                negCount++;
+            }
+        }
+    }
+    string returnString= "";
+    returnString.append("Positive Comments: " + to_string(posCount) + ", Negative Comments: " + to_string(negCount));
+    return returnString;
 }
 
 
@@ -196,4 +257,16 @@ bool Comments::isApplicant(string s) {
 
 bool Comments::validName(string s) {
     return (regex_match(s, regex("^[A-Za-z.]+$")) && (s != ""));
+}
+
+void Comments::tokenize(string const &str, const char delim,
+            vector<string> &out)
+{
+    // construct a stream from the string
+    stringstream ss(str);
+
+    string s;
+    while (getline(ss, s, delim)) {
+        out.push_back(s);
+    }
 }

@@ -143,8 +143,9 @@ void CreateEdit::deleteFile() {
     int option;
     cout << "1.Delete Members/Comments file" << endl;
     cout << "2.Delete Applicants file" << endl;
-    cout << "3.Delete All files" << endl;
-    cout << "4.Back" << endl;
+    cout << "3.Delete Comment file" << endl;
+    cout << "4.Delete All files" << endl;
+    cout << "3.Back" << endl;
     cin >> option;
     
     
@@ -154,10 +155,13 @@ void CreateEdit::deleteFile() {
         cout << "if you delete the members file you also delete the comments" << endl;
         cin >> decision;
         if (decision == "y" || decision == "Y"){
+            ofstream comments("comments.txt");
             ofstream member("members.txt");
             std::remove("members.txt");
+            std::remove("comments.txt");
             cout << "Successfully Completed!" << endl;
             member.close();
+            comments.close();
         }
     }
     if (option == 2) {
@@ -176,6 +180,19 @@ void CreateEdit::deleteFile() {
         cout << "Are you sure?[Y]es[N]o" << endl;
         cin >> decision;
         if (decision == "y" || decision == "Y"){
+            ofstream comment("comments.txt");
+            std::remove("comments.txt");
+            cout << "Successfully Completed!" << endl;
+            comment.close();
+        }
+    }
+    if (option == 4) {
+        string decision;
+        cout << "Are you sure?[Y]es[N]o" << endl;
+        cin >> decision;
+        if (decision == "y" || decision == "Y"){
+            ofstream comments("comments.txt");
+            std::remove("comments.txt");
             ofstream applicant("applicants.txt");
             std::remove("applicants.txt");
             ofstream member("members.txt");
@@ -183,6 +200,7 @@ void CreateEdit::deleteFile() {
             cout << "Successfully Completed!" << endl;
             applicant.close();
             member.close();
+            comments.close();
         }
         
     }

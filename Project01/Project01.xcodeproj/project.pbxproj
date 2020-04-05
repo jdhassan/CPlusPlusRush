@@ -10,6 +10,7 @@
 		6A3A3E7C242560F6002A92A5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A3A3E7B242560F6002A92A5 /* main.cpp */; };
 		6AA3BF432435083D00B3D460 /* Search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3BF412435083D00B3D460 /* Search.cpp */; };
 		6AA3BF462435145000B3D460 /* CreateEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3BF442435145000B3D460 /* CreateEdit.cpp */; };
+		6AA3BF49243529C200B3D460 /* Comments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3BF47243529C200B3D460 /* Comments.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		6AA3BF422435083D00B3D460 /* Search.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Search.hpp; sourceTree = "<group>"; };
 		6AA3BF442435145000B3D460 /* CreateEdit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CreateEdit.cpp; sourceTree = "<group>"; };
 		6AA3BF452435145000B3D460 /* CreateEdit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateEdit.hpp; sourceTree = "<group>"; };
+		6AA3BF47243529C200B3D460 /* Comments.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Comments.cpp; sourceTree = "<group>"; };
+		6AA3BF48243529C200B3D460 /* Comments.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Comments.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +50,8 @@
 		6A3A3E68242560BA002A92A5 = {
 			isa = PBXGroup;
 			children = (
+				6AA3BF47243529C200B3D460 /* Comments.cpp */,
+				6AA3BF48243529C200B3D460 /* Comments.hpp */,
 				6AA3BF442435145000B3D460 /* CreateEdit.cpp */,
 				6AA3BF452435145000B3D460 /* CreateEdit.hpp */,
 				6AA3BF412435083D00B3D460 /* Search.cpp */,
@@ -116,6 +121,7 @@
 				6A3A3E7C242560F6002A92A5 /* main.cpp in Sources */,
 				6AA3BF432435083D00B3D460 /* Search.cpp in Sources */,
 				6AA3BF462435145000B3D460 /* CreateEdit.cpp in Sources */,
+				6AA3BF49243529C200B3D460 /* Comments.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

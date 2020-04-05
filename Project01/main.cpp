@@ -14,17 +14,15 @@
 #include "CreateEdit.hpp"
 #include "Comments.hpp"
 
-
+static int CLEARANCE_LEVEL_NEEDED_TO_GET_COMMENTS = 2;
 using namespace std;
 
 void addSpace() {
     cout << "" << endl;
 }
 
-bool isMember(string name);
-bool isApplicant(string name);
+bool highEnoughClearance();
 
-void addComment();
 void commentDirectory();
 
 
@@ -197,6 +195,7 @@ void commentDirectory() {
     Comments * c = new Comments();
     cout << "1.Add New Comment" << endl;
     cout << "2.Search Comments" << endl;
+    cout << "3.How many positve and negative comments" << endl;
     cout << "4.Back" << endl;
     cin >> choice;
     
@@ -205,9 +204,22 @@ void commentDirectory() {
             c->makeComment();
             break;
         case 2:
-            c->getComment();
+            if(highEnoughClearance()) {
+            cout << c->getComment() << endl;
+            }
+            else {
+                cout << "Not high enough clearance, or invalid name" << endl;
+            }
             break;
         case 3:
+            if (highEnoughClearance()) {
+                cout << c->getNumberTypes() << endl;
+            }
+            else {
+                cout << "Not high enough clearance, or invalid name" << endl;
+            }
+            break;
+        case 4:
             break;
         default:
             cout << "Invalid input" << endl;
@@ -218,42 +230,6 @@ void commentDirectory() {
 }
 
 
-void addNewComment() {
-    string commentor;
-    string applicantsName;
-    string gb;
-    bool isGood;
-    string comment;
-    
-    ofstream newComment("comments.txt", ios::app);
-    
-    cout << "Enter your name:" << endl;
-    cin >> commentor;
-    if (!isMember(commentor)) {
-        cout << "not a valid member name, try again" << endl;
-        addNewComment();
-    }
-    
-    cout << "Enter applicants name (first.lastInital):" << endl;
-    cin >> applicantsName;
-    if (!isApplicant(applicantsName)) {
-        cout << "Not a valid applicant" << endl;
-        addNewComment();
-    }
-    
-    cout << "Is this a positive (p/P) or negative(n/N) comment?:" << endl;
-    cin >> gb;
-    if (gb == "p" || gb == "P") {
-        isGood = true;
-    }
-    if (gb == "n" || gb == "N") {
-        isGood = false;
-    }
-    else {
-        cout << "Non-valid positive/negative identifier, try again" << endl;
-        
-    }
-}
 
 void quit()
 {
@@ -263,32 +239,17 @@ void quit()
     exit(1);
 }
 
-        
-bool isMember(string name) {
-    ifstream member("members.txt", ios::in);
+bool highEnoughClearance() {
+    int year, clearance;
+    string name, fname;
+    cout << "Input your name" << endl;
+    cin >> fname;
     
-    string n;
-    int year;
-    int clearance;
+    ifstream member("members.txt");
     
-    while (member >> n >> year >> clearance) {
-        if (n == name) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool isApplicant(string name) {
-    ifstream applicant("applicants.txt", ios::in);
-    
-    string n;
-    int year;
-    int status;
-    
-    while (applicant >> n >> year >> status) {
-        if (n == name) {
-            return true;
+    while (member >> name >> year >> clearance) {
+        if (fname == name) {
+            return clearance >= CLEARANCE_LEVEL_NEEDED_TO_GET_COMMENTS;
         }
     }
     return false;

@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ public:
     bool isMember(string s);
     bool isApplicant(string s);
     bool validName(string s);
+    string getNumberTypes();
+    void tokenize(string const &str, const char delim, vector<string> &out);
 };
 
 #endif /* Comments_hpp */
