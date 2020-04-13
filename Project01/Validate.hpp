@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class Search {
+class Validate {
 private:
     const int yearBound = 5;
     const int statusBound = 3;

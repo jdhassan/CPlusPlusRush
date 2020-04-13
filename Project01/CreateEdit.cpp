@@ -205,16 +205,3 @@ void CreateEdit::deleteFile() {
         
     }
 }
-
-
-bool CreateEdit::validName(string s) {
-    return (regex_match(s, regex("^[A-Za-z.]+$")) && (s != ""));
-}
-
-bool CreateEdit::validYear(int y) {
-    return (y >= 0 && y <= 5);
-}
-
-bool CreateEdit::validStatus(int s) {
-    return (s >= 0 && s <= 4);
-}

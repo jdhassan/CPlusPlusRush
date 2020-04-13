@@ -17,8 +17,14 @@
 
 using namespace std;
 
-class CreateEdit {
+class CreateEdit : public Validate {
 public:
+    bool validClearance(int c){Validate::validClearance(c);}
+    bool validName(string s){Validate::validName(s);}
+    bool validYear(int y){Validate::validYear(y);}
+    bool validStatus(int s){Validate::validStatus(s);}
+    bool isMember(string s){Validate::isMember(s);}
+    bool isApplicant(string s){Validate::isApplicant(s);}
     void createNew(string fileName, string type);
     void edit(string fileName, string type);
     void deleteFile();
