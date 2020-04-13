@@ -9,6 +9,7 @@
 #ifndef CreateEdit_hpp
 #define CreateEdit_hpp
 
+#include "Validate.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <cstdio>
@@ -21,9 +22,6 @@ public:
     void createNew(string fileName, string type);
     void edit(string fileName, string type);
     void deleteFile();
-    bool validYear(int y);
-    bool validName(string s);
-    bool validStatus(int s);
 };
 
 #endif /* CreateEdit_hpp */
