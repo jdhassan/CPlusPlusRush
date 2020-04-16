@@ -34,6 +34,7 @@
 		6AA3BF452435145000B3D460 /* CreateEdit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateEdit.hpp; sourceTree = "<group>"; };
 		6AA3BF47243529C200B3D460 /* Comments.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Comments.cpp; sourceTree = "<group>"; };
 		6AA3BF48243529C200B3D460 /* Comments.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Comments.hpp; sourceTree = "<group>"; };
+		6ADFBFF02444E31F00BFECC7 /* Validate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Validate.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +51,7 @@
 		6A3A3E68242560BA002A92A5 = {
 			isa = PBXGroup;
 			children = (
+				6ADFBFF02444E31F00BFECC7 /* Validate.hpp */,
 				6AA3BF47243529C200B3D460 /* Comments.cpp */,
 				6AA3BF48243529C200B3D460 /* Comments.hpp */,
 				6AA3BF442435145000B3D460 /* CreateEdit.cpp */,

@@ -12,17 +12,24 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include "Validate.hpp"
 
 using namespace std;
 
-class Comments {
+class Comments : public Validate {
 public:
+    bool isMember(string s)  {
+        return Validate::isMember(s);
+    }
+    bool isApplicant(string s)  {
+        return Validate::isApplicant(s);
+    }
+    bool validName(string s) const {
+        return Validate::validName(s);
+    }
     void makeComment();
-    string getComment();
-    bool isMember(string s);
-    bool isApplicant(string s);
-    bool validName(string s);
-    string getNumberTypes();
+    string getComment() const;
+    string getNumberTypes() const;
     void tokenize(string const &str, const char delim, vector<string> &out);
 };
 

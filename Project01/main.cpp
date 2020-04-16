@@ -17,23 +17,24 @@
 static int CLEARANCE_LEVEL_NEEDED_TO_GET_COMMENTS = 2;
 using namespace std;
 
+/*
+ This function is used to add space between outputs in the main.
+ */
 void addSpace() {
     cout << "" << endl;
 }
 
 bool highEnoughClearance();
-
 void commentDirectory();
-
-
 void applicantOptionDirectory();
 void memberOptionDirectory();
 void quit();
 void searchDirectory(int option);
-
 bool firstMessageShown = false;
+
 int main()
 {
+    //A welcome message that is only shown at startup
     if (!firstMessageShown) {
         cout << "Welcome to rush database" << endl;
         cout << "Press enter to continue" << endl;
@@ -41,9 +42,11 @@ int main()
         firstMessageShown = true;
     }
     
+    //main choice directory
     addSpace();
     CreateEdit * ce = new CreateEdit();
     int choice;
+    cout << "Main Direcotry" << endl;
     cout << "1.Applicant Options" << endl;
     cout << "2.Member Options" << endl;
     cout << "3.Delete File(s)" << endl;
@@ -61,7 +64,6 @@ int main()
             break;
         case 3:
             ce->deleteFile();
-            main();
             break;
         case 4:
             commentDirectory();
@@ -71,17 +73,17 @@ int main()
         default:
             cout << "Invalid Choice" << endl;
             addSpace();
-            main();
             break;
-            
-            
     }
+    main();
 }
 
+//Applicant option directory -> delegates to CreateEdit/Search directory/Comments directory
 void applicantOptionDirectory () {
     addSpace();
     CreateEdit * ce = new CreateEdit();
     int choice;
+    cout << "Applicant directory" << endl;
     cout << "1.Add a new Applicant" << endl;
     cout << "2.Applicant Search Directory" << endl;
     cout << "3.Edit Applicant" << endl;
@@ -109,10 +111,12 @@ void applicantOptionDirectory () {
     main();
 }
 
+//Members directory delegates to createEdit/Search directory/Comments directory
 void memberOptionDirectory() {
     addSpace();
     CreateEdit * ce = new CreateEdit();
     int choice;
+    cout << "Member option directory" << endl;
     cout << "1.Add new Member" << endl;
     cout << "2.Member Search Directory " << endl;
     cout << "3.Edit Member" << endl;
@@ -140,24 +144,29 @@ void memberOptionDirectory() {
     main();
 }
 
+//Seach Directory, delegates to search
 void searchDirectory(int option)
 {
     Search * s = new Search();
-    string fileName, type;
+    string fileName, type, sc;
     int choice;
     addSpace();
     if (option == 1) {
         fileName = "applicants.txt";
         type = "Applicants";
+        sc = "status";
     }
     else {
         fileName = "members.txt";
-        type = "Members";
+        type = "Member";
+        sc = "clearance";
+        
     }
+        cout << type << " Search Directory" << endl;
         cout << "1.Search by name" << endl;
         cout << "2.Search by year" << endl;
-        cout << "3.Search by status" << endl;
-        cout << "4.Display all applicants" << endl;
+        cout << "3.Search by " << sc << endl;
+        cout << "4.Display all " << type << endl;
         cout << "5.Back" << endl;
         cout << "6.Exit program" << endl;
         cin >> choice;
@@ -190,9 +199,11 @@ void searchDirectory(int option)
         main();
 }
 
+//Comment Directory -> delegates to comments
 void commentDirectory() {
     int choice;
     Comments * c = new Comments();
+    cout << "Comment Directory" << endl;
     cout << "1.Add New Comment" << endl;
     cout << "2.Search Comments" << endl;
     cout << "3.How many positve and negative comments" << endl;
@@ -229,16 +240,16 @@ void commentDirectory() {
     main();
 }
 
-
-
+//Closes program and displays goodbye message
 void quit()
 {
     addSpace();
-    cout << "Thank you for using rush application database" << endl;
+    cout << "Thank you for using rush application database, goodbye" << endl;
     cin.get();
     exit(1);
 }
 
+//The test to chekc is a member has high enough clearance to delegate to the search comments function.
 bool highEnoughClearance() {
     int year, clearance;
     string name, fname;

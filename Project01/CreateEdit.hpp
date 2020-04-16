@@ -9,25 +9,37 @@
 #ifndef CreateEdit_hpp
 #define CreateEdit_hpp
 
-#include "Validate.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <cstdio>
 #include <fstream>
+#include "Validate.hpp"
 
 using namespace std;
 
 class CreateEdit : public Validate {
 public:
-    bool validClearance(int c){Validate::validClearance(c);}
-    bool validName(string s){Validate::validName(s);}
-    bool validYear(int y){Validate::validYear(y);}
-    bool validStatus(int s){Validate::validStatus(s);}
-    bool isMember(string s){Validate::isMember(s);}
-    bool isApplicant(string s){Validate::isApplicant(s);}
     void createNew(string fileName, string type);
     void edit(string fileName, string type);
     void deleteFile();
+    bool validYear(int y) const {
+        return Validate::validYear(y);
+    }
+    bool validName(string s) const {
+        return Validate::validName(s);
+    }
+    bool validStatus(int s) const {
+        return Validate::validStatus(s);
+    }
+    bool validClearance(int s) const {
+        return Validate::validClearance(s);
+    }
+    bool isMember(string s)  {
+        return Validate::isMember(s);
+    }
+    bool isApplicant(string s)  {
+        return Validate::isApplicant(s);
+    }
 };
 
 #endif /* CreateEdit_hpp */

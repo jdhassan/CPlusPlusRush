@@ -17,6 +17,9 @@
 
 using namespace std;
 
+/*
+ This function is used for a memebr to make a comment on an applicant. The commentor must give a valid name for him/herself in addition to a valid applicant name. If either of these names are invalid, they will be prompted again. They then indicate if the comment is positive or negative and then add the comment.
+ */
 void Comments::makeComment() {
     string Cname, name, comment, isPositive, output;
     output = "";
@@ -26,24 +29,33 @@ void Comments::makeComment() {
     bool isValidBool = true;
     ofstream comments("comments.txt", ios::app);
     
+    //checks if commentor is a member
     while(isNameValid) {
-        cout << "Please input your name" << endl;
+        cout << "Please input your name (break: \"break\"):" << endl;
         cin >> Cname;
+        if (Cname == "break") {
+            return;
+        }
         isNameValid = !(validName(Cname) && isMember(Cname));
         if(isNameValid) {
             cout << "Name is not in the system, try again" << endl;
         }
     }
     
+    //checks is comentee is an applicant
     while(isAppNameValid) {
-        cout << "Please input applicants name" << endl;
+        cout << "Please input applicants name(break: \"break\"):" << endl;
         cin >> name;
+        if (name == "break") {
+            return;
+        }
         isAppNameValid = !(validName(name) && isApplicant(name));
         if(isAppNameValid) {
             cout << "Name is not in the system, try again" << endl;
         }
     }
     
+    //marker for positive or negative comment - to be used by search options
     while (isValidBool) {
         cout << "Is this comment positive (p) or negative (n)" << endl;
         cin >> isPositive;
@@ -70,7 +82,10 @@ void Comments::makeComment() {
     comments.close();
 }
 
-string Comments::getComment() {
+/*
+ This function will allow the user to decide how to search through the comments. There is a cleance restriction enforced in the main. The commentor must pick one of the search options and enter any of the required info (like Commentor name, Applicant name ...) and then the comments will be out putted to the screen.
+ */
+string Comments::getComment() const {
     string fname, name, cname, o, c, token, output, posi;
     size_t pos = 0;
     string outputs[4];
@@ -79,7 +94,7 @@ string Comments::getComment() {
     bool byPos = false;
     int choice;
     string delim = "|";
-    cout << "Would you like to use parameter?" << endl;
+    cout << "Search Parameters" << endl;
     cout << "1.By Applicant name" << endl;
     cout << "2.By Applicant name and positive only" << endl;
     cout << "3.By Applicant name and negative only" << endl;
@@ -87,6 +102,7 @@ string Comments::getComment() {
     cout << "5.By Commentor name and positive only" << endl;
     cout << "6.By Commentor name and negative only" << endl;
     cout << "7.All comments" << endl;
+    cout << "8.Back" << endl;
     cin >> choice;
     
     switch (choice) {
@@ -137,7 +153,7 @@ string Comments::getComment() {
             break;
     }
     ifstream comments("comments.txt");
-    
+    //below cycles through all options and depending on what is set, will output the formatted comment by Commentor, Applicant, Positive/Negative, Comment
     if (name == "empty") {
      while(comments >> o) {
          int i = 0;
@@ -198,7 +214,10 @@ string Comments::getComment() {
     return output;
 }
 
-string Comments::getNumberTypes() {
+/*
+ This function can return the number of positive and negative comments on an applicant just so you can get a quick glance at a majority opinion for the applicant.
+ */
+string Comments::getNumberTypes() const{
     string fname, token, o;
     string outputs[4];
     int posCount = 0;
@@ -231,42 +250,3 @@ string Comments::getNumberTypes() {
 }
 
 
-bool Comments::isMember(string s) {
-    ifstream file("members.txt");
-    int year, clearance;
-    string name;
-    while(file >> name >> year >> clearance) {
-        if (name == s) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Comments::isApplicant(string s) {
-    ifstream file("applicants.txt");
-    int year, status;
-    string name;
-    while(file >> name >> year >> status) {
-        if (name == s) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Comments::validName(string s) {
-    return (regex_match(s, regex("^[A-Za-z.]+$")) && (s != ""));
-}
-
-void Comments::tokenize(string const &str, const char delim,
-            vector<string> &out)
-{
-    // construct a stream from the string
-    stringstream ss(str);
-
-    string s;
-    while (getline(ss, s, delim)) {
-        out.push_back(s);
-    }
-}
