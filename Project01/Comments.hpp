@@ -18,10 +18,10 @@ using namespace std;
 
 class Comments : public Validate {
 public:
-    bool isMember(string s)  {
+    bool isMember(string s) const {
         return Validate::isMember(s);
     }
-    bool isApplicant(string s)  {
+    bool isApplicant(string s)  const{
         return Validate::isApplicant(s);
     }
     bool validName(string s) const {
@@ -30,7 +30,6 @@ public:
     void makeComment();
     string getComment() const;
     string getNumberTypes() const;
-    void tokenize(string const &str, const char delim, vector<string> &out);
 };
 
 #endif /* Comments_hpp */

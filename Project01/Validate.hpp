@@ -15,7 +15,7 @@ class Validate {
 private:
     const int yearBound = 5;
     const int statusBound = 3;
-    const int clearanceBound = 4;
+    const int clearanceBound = 5;
 public:
     //checks if the given int is a valid clearnace number
     virtual bool validClearance(int c) const {
@@ -35,7 +35,7 @@ public:
     }
     
     //checks if the name given as a string is in the members.txt
-    virtual bool isMember(string s) {
+    virtual bool isMember(string s) const {
         ifstream file("members.txt");
         int year, clearance;
         string name;
@@ -47,7 +47,7 @@ public:
         return false;
     }
     //checks if the name given as a string is in the applicants.txt
-    virtual bool isApplicant(string s) {
+    virtual bool isApplicant(string s) const {
         ifstream file("applicants.txt");
         int year, status;
         string name;

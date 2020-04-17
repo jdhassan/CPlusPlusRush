@@ -23,10 +23,10 @@ public:
     string searchByYear(string fileName, string type);
     string seachBystatClear(string fileName, string type);
     string displayAll(string fileName, string type);
-    bool isMember(string s) {
+    bool isMember(string s) const {
         return Validate::isMember(s);
     }
-    bool isApplicant(string s) {
+    bool isApplicant(string s) const {
         return Validate::isApplicant(s);
     }
     bool validYear(int y) const {

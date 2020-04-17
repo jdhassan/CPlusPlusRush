@@ -147,6 +147,9 @@ string Comments::getComment() const {
             sort = false;
             name = "empty";
             break;
+        case 8:
+            return "";
+            break;
         default:
             cout << "Invalid choice" << endl;
             getComment();

@@ -34,10 +34,10 @@ public:
     bool validClearance(int s) const {
         return Validate::validClearance(s);
     }
-    bool isMember(string s)  {
+    bool isMember(string s) const {
         return Validate::isMember(s);
     }
-    bool isApplicant(string s)  {
+    bool isApplicant(string s) const  {
         return Validate::isApplicant(s);
     }
 };

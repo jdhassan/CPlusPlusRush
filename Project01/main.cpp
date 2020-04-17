@@ -24,7 +24,7 @@ void addSpace() {
     cout << "" << endl;
 }
 
-bool highEnoughClearance();
+bool highEnoughClearance(int mod);
 void commentDirectory();
 void applicantOptionDirectory();
 void memberOptionDirectory();
@@ -32,8 +32,7 @@ void quit();
 void searchDirectory(int option);
 bool firstMessageShown = false;
 
-int main()
-{
+int main() {
     //A welcome message that is only shown at startup
     if (!firstMessageShown) {
         cout << "Welcome to rush database" << endl;
@@ -49,8 +48,8 @@ int main()
     cout << "Main Direcotry" << endl;
     cout << "1.Applicant Options" << endl;
     cout << "2.Member Options" << endl;
-    cout << "3.Delete File(s)" << endl;
-    cout << "4.Comment Options" << endl;
+    cout << "3.Comment Options" << endl;
+    cout << "4.Delete File(s)" << endl;
     cout << "5.Exit Program" << endl;
     cin >> choice;
     
@@ -62,10 +61,15 @@ int main()
         case 2:
             memberOptionDirectory();
             break;
-        case 3:
-            ce->deleteFile();
-            break;
         case 4:
+            if (highEnoughClearance(1)) {
+                ce->deleteFile();
+            }
+            else {
+                cout << "Not high enough clearance, or invalid name" << endl;
+            }
+            break;
+        case 3:
             commentDirectory();
         case 5:
             quit();
@@ -99,7 +103,12 @@ void applicantOptionDirectory () {
             searchDirectory(1);
             break;
         case 3:
-            ce->edit("applicants.txt", "Applicant");
+            if (highEnoughClearance(1)) {
+                ce->edit("applicants.txt", "Applicant");
+            }
+            else {
+                cout << "Not high enough clearance, or invalid name" << endl;
+            }
             break;
         case 4:
             break;
@@ -132,7 +141,12 @@ void memberOptionDirectory() {
             searchDirectory(2);
             break;
         case 3:
-            ce->edit("members.txt", "Member");
+            if (highEnoughClearance(1)) {
+                ce->edit("members.txt", "Member");
+            }
+            else {
+                cout << "Not high enough clearance, or invalid name" << endl;
+            }
             break;
         case 4:
             break;
@@ -215,7 +229,7 @@ void commentDirectory() {
             c->makeComment();
             break;
         case 2:
-            if(highEnoughClearance()) {
+            if(highEnoughClearance(0)) {
             cout << c->getComment() << endl;
             }
             else {
@@ -223,7 +237,7 @@ void commentDirectory() {
             }
             break;
         case 3:
-            if (highEnoughClearance()) {
+            if (highEnoughClearance(0)) {
                 cout << c->getNumberTypes() << endl;
             }
             else {
@@ -249,8 +263,8 @@ void quit()
     exit(1);
 }
 
-//The test to chekc is a member has high enough clearance to delegate to the search comments function.
-bool highEnoughClearance() {
+//The test to chekc is a member has high enough clearance to delegate to the search comments function or delete files.
+bool highEnoughClearance(int mod) {
     int year, clearance;
     string name, fname;
     cout << "Input your name" << endl;
@@ -260,7 +274,7 @@ bool highEnoughClearance() {
     
     while (member >> name >> year >> clearance) {
         if (fname == name) {
-            return clearance >= CLEARANCE_LEVEL_NEEDED_TO_GET_COMMENTS;
+            return clearance >= (CLEARANCE_LEVEL_NEEDED_TO_GET_COMMENTS + mod);
         }
     }
     return false;

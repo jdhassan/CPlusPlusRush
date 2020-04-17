@@ -59,7 +59,12 @@ void CreateEdit::createNew(string fileName, string type) {
     while(validStatClearInt) {
     cout << "Enter the " << type << "'s "<< sc <<"(integer)." << endl;
     cin >> statClear;
-        validStatClearInt = !validStatus(statClear);
+        if (type == "Member") {
+        validStatClearInt = !validClearance(statClear);
+        }
+        else {
+            validStatClearInt = !validStatus(statClear);
+        }
         if (validStatClearInt) {
             cout << "Invalid input, try again" << endl;
         }
